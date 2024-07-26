@@ -1,7 +1,27 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { Bar } from 'react-chartjs-2';
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+} from 'chart.js';
 
-const Home = () => {
+// Register Chart.js components
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend
+);
+
+const DashboardHome = () => {
   const [report, setReport] = useState(null);
   const [error, setError] = useState('');
 
@@ -19,20 +39,49 @@ const Home = () => {
     fetchReport();
   }, []);
 
+  const data = {
+    labels: ['Fractured', 'Non-Fractured'],
+    datasets: [
+      {
+        label: '# of Images',
+        data: report ? [report.fractured, report.non_fractured] : [0, 0],
+        backgroundColor: ['rgba(255, 99, 132, 0.2)', 'rgba(54, 162, 235, 0.2)'],
+        borderColor: ['rgba(255, 99, 132, 1)', 'rgba(54, 162, 235, 1)'],
+        borderWidth: 1,
+      },
+    ],
+  };
+
+  const options = {
+    scales: {
+      y: {
+        beginAtZero: true,
+        ticks: {
+          precision: 0,
+        },
+      },
+    },
+  };
+
   return (
-    <div className="flex items-center justify-center min-h-screen bg-blue-800">
-      <div className="bg-gray-800 p-8 rounded-lg shadow-md w-full max-w-md">
-        <h2 className="text-2xl font-bold text-white mb-6 text-center">Report</h2>
+    <div className="flex flex-col min-h-screen bg-blue-700">
+      <div className="bg-gray-800 p-8 rounded-lg shadow-md w-full max-w-7xl">
+        <h2 className="text-2xl font-bold text-white mb-6 text-center">Dashboard</h2>
         {error && <p className="text-red-500 mb-4">{error}</p>}
         {report ? (
           <div className="text-white">
-            <div className="bg-gray-700 p-4 rounded-lg mb-4">
-              <h3 className="text-xl font-bold mb-2">Fractured</h3>
-              <p>Total Fractured Images: {report.fractured}</p>
+            <div className="mb-8">
+              <Bar data={data} options={options} />
             </div>
-            <div className="bg-gray-700 p-4 rounded-lg">
-              <h3 className="text-xl font-bold mb-2">Non-Fractured</h3>
-              <p>Total Non-Fractured Images: {report.non_fractured}</p>
+            <div className="grid grid-cols-2 gap-4">
+              <div className="bg-gray-700 p-4 rounded-lg">
+                <h3 className="text-xl font-bold mb-2">Fractured</h3>
+                <p>Total Fractured Images: {report.fractured}</p>
+              </div>
+              <div className="bg-gray-700 p-4 rounded-lg">
+                <h3 className="text-xl font-bold mb-2">Non-Fractured</h3>
+                <p>Total Non-Fractured Images: {report.non_fractured}</p>
+              </div>
             </div>
           </div>
         ) : (
@@ -43,4 +92,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default DashboardHome;

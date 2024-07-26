@@ -7,6 +7,19 @@ require('dotenv').config(); // Load environment variables
 
 const router = express.Router();
 
+
+router.get('/user', async (req, res) => {
+  try {
+    const user = await User.findById(req.user._id).select('_id');
+    if (!user) return res.status(404).json({ message: 'User not found' });
+
+    res.json({ username: user.username });
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching user data' });
+  }
+});
+
+
 router.post('/register', async (req, res) => {
   const { username, email, password } = req.body;
   try {
@@ -23,8 +36,8 @@ router.post('/register', async (req, res) => {
 });
 
 router.post('/login', async (req, res) => {
-  const { email, password } = req.body;
-  const user = await User.findOne({ email });
+  const { username, password } = req.body;
+  const user = await User.findOne({ username });
   if (!user) return res.status(404).send('User not found');
   const isMatch = await bcrypt.compare(password, user.password);
   if (!isMatch) return res.status(400).send('Invalid credentials');
