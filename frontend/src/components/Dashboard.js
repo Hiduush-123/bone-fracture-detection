@@ -191,19 +191,19 @@ const Dashboard = () => {
           <div>
             <ul className="space-y-4">
               <li>
-                <Link to="/dashboard/home" className="block py-2.5 px-4 rounded transition duration-200 hover:bg-blue-700 items-center">
+                <Link to="/dashboard/home" className="block py-2.5 px-4 rounded transition duration-200 hover:bg-blue-700 flex items-center">
                   <FontAwesomeIcon icon={faTachometerAlt} className="mr-2" />
                   Dashboard
                 </Link>
               </li>
               <li>
-                <Link to="/dashboard/uploadShow" className="block py-2.5 px-4 rounded transition duration-200 hover:bg-blue-700 items-center">
+                <Link to="/dashboard/uploadShow" className="block py-2.5 px-4 rounded transition duration-200 hover:bg-blue-700 flex items-center">
                   <FontAwesomeIcon icon={faUpload} className="mr-2" />
                   Upload X-ray
                 </Link>
               </li>
               <li>
-                <Link to="/dashboard/history" className="block py-2.5 px-4 rounded transition duration-200 hover:bg-blue-700 items-center">
+                <Link to="/dashboard/history" className="block py-2.5 px-4 rounded transition duration-200 hover:bg-blue-700 flex items-center">
                   <FontAwesomeIcon icon={faFileAlt} className="mr-2" />
                   Reports
                 </Link>

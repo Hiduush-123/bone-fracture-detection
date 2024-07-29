@@ -1,5 +1,6 @@
 import os
 os.environ['TF_ENABLE_ONEDNN_OPTS'] = '0'
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'  # To disable other TensorFlow logging messages
 
 from flask import Flask, request, jsonify, send_file
 from flask_cors import CORS
@@ -22,7 +23,7 @@ print("Starting Flask app...")
 # MongoDB client setup with increased timeout settings
 try:
     client = MongoClient(
-        'mongodb+srv://xilkasmohamed827:xamdiyaa@cluster0.3of2cfo.mongodb.net/?retryWrites=true&w=majority',
+        'mongodb+srv://xilkasmohamed827:xamdiyaa@cluster0.3of2cfo.mongodb.net/test?retryWrites=true&w=majority',
         socketTimeoutMS=300000,  # Set socket timeout to 5 minutes
         connectTimeoutMS=300000,  # Set connection timeout to 5 minutes
         serverSelectionTimeoutMS=300000,  # Set server selection timeout to 5 minutes
